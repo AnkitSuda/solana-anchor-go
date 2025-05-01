@@ -8,6 +8,7 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	"github.com/gagliardetto/solana-go"
 	"io/ioutil"
+	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -1532,9 +1533,12 @@ func genAccountGettersSetters(
 			var seedProgramValue *[]byte
 			if account.PDA.Program != nil {
 				if account.PDA.Program.Value == nil {
-					panic("cannot handle non-const type program value in PDA seeds")
+					spew.Dump(account.PDA.Program)
+					//panic("cannot handle non-const type program value in PDA seeds")
+					log.Println("cannot handle non-const type program value in PDA seeds")
+				} else {
+					seedProgramValue = &account.PDA.Program.Value
 				}
-				seedProgramValue = &account.PDA.Program.Value
 			}
 
 		OUTER:
